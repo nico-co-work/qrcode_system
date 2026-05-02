@@ -44,6 +44,15 @@ function onFormSubmit(e) {
   // 処理シートに転記
   var processSheet = SpreadsheetApp.getActiveSpreadsheet()
     .getSheetByName(CONFIG.PROCESS_SHEET_NAME);
+  if (!processSheet) {
+    Logger.log("エラー: 「" + CONFIG.PROCESS_SHEET_NAME + "」シートが見つかりません。メニューから「処理シートを作成」を実行してください。");
+    // シートが見つからなくてもメールは送る
+    var checkInUrl = getWebAppUrl() + "?id=" + uuid;
+    if (attendance === CONFIG.ATTENDANCE_SEND_QR) {
+      sendConfirmationEmail(email, name, attendance, other, uuid, checkInUrl);
+    }
+    return;
+  }
   var newRow = processSheet.getLastRow() + 1;
 
   processSheet.getRange(newRow, CONFIG.PROC_COL_NAME       + 1).setValue(name);
