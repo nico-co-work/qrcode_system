@@ -96,7 +96,7 @@ function sendConfirmationEmail(email, name, attendance, other, uuid, checkInUrl)
   var qrBlob   = getQrBlob(checkInUrl);
   var subject  = CONFIG.EMAIL_SUBJECT;
   var body     = buildEmailBody(name, attendance, uuid, checkInUrl);
-  var htmlBody = buildEmailHtml(name, attendance, other, uuid);
+  var htmlBody = buildEmailHtml(name, attendance, other, uuid, checkInUrl);
 
   GmailApp.sendEmail(email, subject, body, {
     htmlBody:     htmlBody,
@@ -126,7 +126,7 @@ function buildEmailBody(name, attendance, uuid, checkInUrl) {
 }
 
 // ===== メール本文（HTML）=====
-function buildEmailHtml(name, attendance, other, uuid) {
+function buildEmailHtml(name, attendance, other, uuid, checkInUrl) {
   var otherRow = other
     ? '<tr><td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;">備考</td>'
       + '<td style="padding:8px;border:1px solid #ddd;">' + escapeHtml(other) + '</td></tr>'
@@ -151,6 +151,9 @@ function buildEmailHtml(name, attendance, other, uuid) {
     + '<div style="text-align:center;margin:24px 0;">'
     + '<img src="cid:qrcode" alt="受付QRコード" style="border:1px solid #ddd;padding:8px;" />'
     + '</div>'
+    + '<p style="text-align:center;">'
+    + '<a href="' + checkInUrl + '" style="display:inline-block;padding:12px 24px;background:#4CAF50;color:white;text-decoration:none;border-radius:8px;font-weight:bold;">📱 タップして受付（QRが読めない場合）</a>'
+    + '</p>'
     + '<p style="font-size:12px;color:#666;">このメールに心当たりがない場合は運営事務局までご連絡ください。</p>'
     + '</div>';
 }
