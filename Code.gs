@@ -23,8 +23,8 @@ var CONFIG = {
   // メール設定
   EMAIL_SUBJECT: "【受付完了】懇親会参加登録のご確認",
   EVENT_NAME:    "けいたろうさんオフ会",
-  EVENT_DATE:    "2026年XX月XX日",
-  EVENT_PLACE:   "会場名をここに入力",
+  EVENT_DATE:    "2026年6月15日（月）19:00〜21:00",
+  EVENT_PLACE:   "渋谷 THE DINING LOUNGE（渋谷駅徒歩3分）",
 
   // QRメールを送る対象（懇親会の参加についての回答値）
   ATTENDANCE_SEND_QR: "参加する",
