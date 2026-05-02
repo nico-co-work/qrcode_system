@@ -1,11 +1,15 @@
 // ===== 受付Webアプリ（QRスキャン後に開くページ）=====
 
 function doGet(e) {
-  var uuid = e.parameter.id || "";
-  if (!uuid) return buildPage("エラー", "<p>QRコードが無効です。</p>", "#f44336");
+  try {
+    var uuid = e.parameter.id || "";
+    if (!uuid) return buildPage("エラー", "<p>QRコードが無効です。</p>", "#f44336");
 
-  var result = processCheckIn(uuid);
-  return buildPage(result.title, result.message, result.color);
+    var result = processCheckIn(uuid);
+    return buildPage(result.title, result.message, result.color);
+  } catch (err) {
+    return buildPage("エラー", "<p>処理中にエラーが発生しました。</p><p style='font-size:12px;color:#888;'>" + err.message + "</p>", "#f44336");
+  }
 }
 
 // ===== 受付処理 =====
