@@ -45,15 +45,15 @@ function onFormSubmit(e) {
   var processSheet = SpreadsheetApp.getActiveSpreadsheet()
     .getSheetByName(CONFIG.PROCESS_SHEET_NAME);
   if (!processSheet) {
-    Logger.log("エラー: 「" + CONFIG.PROCESS_SHEET_NAME + "」シートが見つかりません。メニューから「処理シートを作成」を実行してください。");
-    // シートが見つからなくてもメールは送る
-    var checkInUrl = getWebAppUrl() + "?id=" + uuid;
-    if (attendance === CONFIG.ATTENDANCE_SEND_QR) {
-      sendConfirmationEmail(email, name, attendance, other, uuid, checkInUrl);
-    }
+    Logger.log("エラー: 「" + CONFIG.PROCESS_SHEET_NAME + "」シートが見つかりません。");
     return;
   }
-  var newRow = processSheet.getLastRow() + 1;
+  // A列（お名前）で空行を探す（getLastRow はチェックボックスもカウントするためNG）
+  var nameCol = processSheet.getRange("A:A").getValues();
+  var newRow = 2;
+  for (var i = 1; i < nameCol.length; i++) {
+    if (!nameCol[i][0]) { newRow = i + 1; break; }
+  }
 
   processSheet.getRange(newRow, CONFIG.PROC_COL_NAME       + 1).setValue(name);
   processSheet.getRange(newRow, CONFIG.PROC_COL_EMAIL      + 1).setValue(email);
