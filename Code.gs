@@ -75,7 +75,7 @@ function getQrBlob(data) {
 // ===== WebアプリURL取得 =====
 function getWebAppUrl() {
   var url = ScriptApp.getService().getUrl();
-  if (!url) url = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+  if (!url) url = "https://script.google.com/macros/s/AKfycbwBxD77-j6egycb1hEmUPT0Tyg6WYCpDA4ju5iyasJEEOH6Bzno5S41TjBjUhxMa2iewQ/exec";
   return url;
 }
 
